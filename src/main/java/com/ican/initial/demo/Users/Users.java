@@ -1,4 +1,4 @@
-package com.ican.initial.demo;
+package com.ican.initial.demo.Users;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

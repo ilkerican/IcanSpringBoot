@@ -1,4 +1,4 @@
-package com.ican.initial.demo;
+package com.ican.initial.demo.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,17 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @Controller // This means that this class is a Controller
-@RequestMapping(path = "/demo") // This means URL's start with /demo (after Application path)
-public class MainController {
+@RequestMapping(path = "/users") // This means URL's start with /demo (after Application path)
+public class UsersController {
 
     private final UsersService usersService;
 
     @Autowired
-    public MainController(UsersService usersService) {
+    public UsersController(UsersService usersService) {
         this.usersService = usersService;
     }
 
+    @Operation(summary = "Adds a new user to the database", description = "All the fields are required.")
     @PostMapping(path = "/add") // Map ONLY POST Requests
     public @ResponseBody String addNewUser(@RequestParam String name, @RequestParam String email) {
         // @ResponseBody means the returned String is the response, not a view name

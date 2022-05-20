@@ -1,4 +1,4 @@
-package com.ican.initial.demo;
+package com.ican.initial.demo.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
