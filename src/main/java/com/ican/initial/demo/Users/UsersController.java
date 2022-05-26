@@ -1,5 +1,7 @@
 package com.ican.initial.demo.Users;
 
+import com.github.dozermapper.core.Mapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -15,10 +18,25 @@ import io.swagger.v3.oas.annotations.Operation;
 public class UsersController {
 
     private final UsersService usersService;
+    private final Mapper mapper;
 
     @Autowired
-    public UsersController(UsersService usersService) {
+    public UsersController(UsersService usersService, Mapper mapper) {
         this.usersService = usersService;
+        this.mapper = mapper;
+    }
+
+    @Operation(summary = "Adds a new user to the database", description = "All the fields are required.")
+    @PostMapping(path = "/add2") // Map ONLY POST Requests
+    public @ResponseBody String addNewUserWithRbUserClass(@RequestBody RBUsers rbUsers) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        // rbUsers.setemail("email");
+        Users n = new Users();
+        mapper.map(rbUsers, n);
+
+        return "Saved";
     }
 
     @Operation(summary = "Adds a new user to the database", description = "All the fields are required.")
@@ -28,8 +46,8 @@ public class UsersController {
         // @RequestParam means it is a parameter from the GET or POST request
 
         Users n = new Users();
-        n.setName(name);
-        n.setEmail(email);
+        n.setname(name);
+        n.setemail(email);
         // usersRepository.save(n);
         return "Saved";
     }
