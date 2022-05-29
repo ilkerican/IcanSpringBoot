@@ -15,6 +15,11 @@ public class UsersService {
 
     public Iterable<Users> getAllUsers() {
         return usersRepository.findAll();
+
+    }
+
+    public Users Save(Users users) {
+        return usersRepository.save(users);
     }
 
 }
