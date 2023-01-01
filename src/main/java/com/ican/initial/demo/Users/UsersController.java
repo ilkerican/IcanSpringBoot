@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import io.swagger.v3.oas.annotations.Operation;
 
+/*
+ * APP URL : http://localhost:8080/users/all
+ */
+
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/users") // This means URL's start with /demo (after Application path)
 public class UsersController {
