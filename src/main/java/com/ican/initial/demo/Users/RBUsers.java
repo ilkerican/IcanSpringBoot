@@ -1,16 +1,21 @@
 package com.ican.initial.demo.Users;
 
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RBUsers {
     private Integer id;
-
     private String name;
+    @NotNull(message = "Surname cannot be null")
     private String surname;
     private String password;
     private Integer isactive;
-
     private String email;
+    private Date datecreated;
+    private Date datelastupdated;
 
     @JsonProperty(value = "id")
     public Integer getid() {
@@ -70,6 +75,26 @@ public class RBUsers {
     @JsonProperty(value = "isactive")
     public void setisactive(Integer isactive) {
         this.isactive = isactive;
+    }
+
+    @JsonProperty(value = "datecreated")
+    public Date getdatecreated() {
+        return datecreated;
+    }
+
+    @JsonProperty(value = "datecreated")
+    public void setdatecreated(Date datecreated) {
+        this.datecreated = datecreated;
+    }
+
+    @JsonProperty(value = "datelastupdated")
+    public Date getdatelastupdated() {
+        return datelastupdated;
+    }
+
+    @JsonProperty(value = "datelastupdated")
+    public void setdatelastupdated(Date datelastupdated) {
+        this.datelastupdated = datelastupdated;
     }
 
 }
