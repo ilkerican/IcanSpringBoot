@@ -1,9 +1,11 @@
 package com.ican.initial.demo.Users;
 
 import com.github.dozermapper.core.Mapper;
+import com.ican.initial.demo.AppMain.InitService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -36,14 +38,16 @@ import io.swagger.v3.oas.annotations.Operation;
 public class UsersController {
 
     private final UsersService usersService;
+    private final InitService initService;
     private final Mapper mapper;
     @Autowired
     private UsersRepository usersRepository;
 
     @Autowired
-    public UsersController(UsersService usersService, Mapper mapper) {
+    public UsersController(UsersService usersService, Mapper mapper, InitService initService) {
         this.usersService = usersService;
         this.mapper = mapper;
+        this.initService = initService;
     }
 
     @Operation(summary = "Adds a new user to the database", description = "All the fields are required.")
@@ -71,6 +75,8 @@ public class UsersController {
         // rbUsers.setemail("email");
 
         // return ResponseEntity.status(HttpStatus.OK).body(usersService.Save(users));
+
+        List<String> cachedData = initService.getCachedData();
 
         return usersRepository.save(users);
         // return ;
