@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "databaseType",
+  "type": "java.lang.String",
+  "description": "Represents the type of the database used"
+}]}

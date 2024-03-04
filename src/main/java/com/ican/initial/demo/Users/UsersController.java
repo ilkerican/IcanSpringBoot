@@ -76,7 +76,7 @@ public class UsersController {
 
         // return ResponseEntity.status(HttpStatus.OK).body(usersService.Save(users));
 
-        List<String> cachedData = initService.getCachedData();
+        List<Map<String, Object>> metaData = initService.getMetaData();
 
         return usersRepository.save(users);
         // return ;

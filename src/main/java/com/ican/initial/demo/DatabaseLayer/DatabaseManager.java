@@ -21,7 +21,22 @@ public class DatabaseManager {
 
     public static enum DatabaseType {
         MSSQL,
-        ORACLE
+        ORACLE,
+        OTHER
+    }
+
+    public static DatabaseType getDatabaseType(String dbTypeasString) {
+
+        switch (dbTypeasString) {
+            case "MSSQL":
+                return DatabaseType.MSSQL;
+            case "ORACLE":
+                return DatabaseType.ORACLE;
+
+            default:
+                return DatabaseType.OTHER;
+        }
+
     }
 
     private Connection connection;
