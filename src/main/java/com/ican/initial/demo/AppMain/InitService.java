@@ -1,15 +1,9 @@
 package com.ican.initial.demo.AppMain;
 
 import javax.annotation.PostConstruct;
-
-import org.springframework.boot.jdbc.DataSourceInitializationMode;
 import org.springframework.stereotype.Service;
-
 import com.ican.initial.demo.DatabaseLayer.DatabaseManager;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;

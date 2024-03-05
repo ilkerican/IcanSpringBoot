@@ -2,6 +2,7 @@ package com.ican.initial.demo.Users;
 
 import com.github.dozermapper.core.Mapper;
 import com.ican.initial.demo.AppMain.InitService;
+import com.ican.initial.demo.DatabaseLayer.AuxMethods;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,6 +78,8 @@ public class UsersController {
         // return ResponseEntity.status(HttpStatus.OK).body(usersService.Save(users));
 
         List<Map<String, Object>> metaData = initService.getMetaData();
+
+        AuxMethods.doValidityCheck(metaData, "Employee_updated", null);
 
         return usersRepository.save(users);
         // return ;
