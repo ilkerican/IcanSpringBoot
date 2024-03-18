@@ -23,6 +23,7 @@ public class AuxMethods {
             List<Map<String, Object>> values) {
         List<Map<String, Object>> tableDefinition = filterListByColumn(metadata, COLUMNNAMETABLENAME, tableName);
 
+        String valColumnNameIteration = null;
         String valColumnName = null;
         String valColumnType = null;
         Integer valColumnLength = null;
@@ -32,11 +33,11 @@ public class AuxMethods {
             // Iterate over the map entries
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 // Get the column name into the variable named ColumnName
-                valColumnName = entry.getKey().toString();
+                valColumnNameIteration = entry.getKey().toString();
 
-                switch (valColumnName) {
+                switch (valColumnNameIteration) {
                     case COLUMNNAMEColumnName:
-                        // columnName is not important, there is no validation for columnName
+                        valColumnName = entry.getValue().toString();
                         break;
                     case COLUMNNAMEColumnType:
                         valColumnType = entry.getValue().toString();
@@ -52,6 +53,12 @@ public class AuxMethods {
                 }
 
             }
+
+            // Her kolonla ilgili değerlendirme bu noktada yapılacak
+            // valColumnName, valColumnType, valColumnLength, valNullable : bu değerleri
+            // kullanarak values içinde gelecek olan satırdan ilgili kolon bulunup
+            // o kolon için validasyon kontrolü yapılacak
+            // Bu ayrı bir fonksiyon olsa iyi olur
         }
 
         int a = 3;
