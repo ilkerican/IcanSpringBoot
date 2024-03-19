@@ -1,6 +1,7 @@
 package com.ican.initial.demo.DatabaseLayer;
 
 import java.util.stream.Collectors;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,22 @@ public class AuxMethods {
     private static final String COLUMNNAMEColumnLength = "ColumnLength";
     private static final String COLUMNNAMENullable = "Nullable";
 
+    public class DatabaseRow {
+        private Map<String, Object> fields;
+
+        public DatabaseRow() {
+            fields = new HashMap<>();
+        }
+
+        public void setFieldValue(String fieldName, Object fieldValue) {
+            fields.put(fieldName, fieldValue);
+        }
+
+        public Object getFieldValue(String fieldName) {
+            return fields.get(fieldName);
+        }
+    }
+
     public static List<Map<String, Object>> filterListByColumn(List<Map<String, Object>> originalList,
             String columnName, Object columnValue) {
         return originalList.stream()
@@ -19,8 +36,13 @@ public class AuxMethods {
                 .collect(Collectors.toList());
     }
 
-    public static void doValidityCheck(List<Map<String, Object>> metadata, String tableName,
-            List<Map<String, Object>> values) {
+    private static String validateColumn(String columnType, Integer columnLength, boolean nullable, Object fieldValue) {
+
+        return null;// TODO : implement this
+    }
+
+    public static String doValidityCheck(List<Map<String, Object>> metadata, String tableName,
+            DatabaseRow rowData) {
         List<Map<String, Object>> tableDefinition = filterListByColumn(metadata, COLUMNNAMETABLENAME, tableName);
 
         String valColumnNameIteration = null;
@@ -28,6 +50,8 @@ public class AuxMethods {
         String valColumnType = null;
         Integer valColumnLength = null;
         boolean valNullable = false;
+
+        String validationResult = "";
 
         for (Map<String, Object> map : tableDefinition) {
             // Iterate over the map entries
@@ -54,6 +78,9 @@ public class AuxMethods {
 
             }
 
+            Object fieldValue = rowData.getFieldValue(valColumnName);
+            validationResult += validateColumn(valColumnType, valColumnLength, valNullable, fieldValue);
+
             // Her kolonla ilgili değerlendirme bu noktada yapılacak
             // valColumnName, valColumnType, valColumnLength, valNullable : bu değerleri
             // kullanarak values içinde gelecek olan satırdan ilgili kolon bulunup
@@ -61,7 +88,8 @@ public class AuxMethods {
             // Bu ayrı bir fonksiyon olsa iyi olur
         }
 
-        int a = 3;
+        return validationResult;
+
     }
 
 }
