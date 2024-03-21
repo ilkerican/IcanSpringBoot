@@ -13,6 +13,13 @@ public class AuxMethods {
     private static final String COLUMNNAMEColumnLength = "ColumnLength";
     private static final String COLUMNNAMENullable = "Nullable";
 
+    public static final String CTYPE_INTEGER = "Integer";
+    public static final String CTYPE_STRING = "String";
+    public static final String CTYPE_BOOLEAN = "boolean";
+
+    public static final String MSG_NOTNULL = "Field value cannot be null.";
+    public static final String MSG_STRINGTOOLONG = "Field value length exceeds expected size.";
+
     public class DatabaseRow {
         private Map<String, Object> fields;
 
@@ -36,9 +43,43 @@ public class AuxMethods {
                 .collect(Collectors.toList());
     }
 
-    private static String validateColumn(String columnType, Integer columnLength, boolean nullable, Object fieldValue) {
+    private static String appendColumnNameToErrorMessage(String columName, String message) {
+        return "COLUMNNAME : " + columName + ", MESSAGE : " + message;
+    }
 
-        return null;// TODO : implement this
+    private static String validateString(String columnName, Integer columnLength, Object fieldValue) {
+        String result = "";
+
+        Integer fieldLength = fieldValue.toString().length();
+
+        if (fieldLength > columnLength) {
+            result = appendColumnNameToErrorMessage(columnName,
+                    MSG_STRINGTOOLONG + " : " + fieldLength + " vs " + columnLength);
+        }
+        return result;
+    }
+
+    private static String validateColumn(String columnName, String columnType, Integer columnLength, boolean nullable,
+            Object fieldValue) {
+
+        String result = "";
+
+        if (!nullable) {
+            if (fieldValue == null) {
+                result += appendColumnNameToErrorMessage(columnName, MSG_NOTNULL);
+                return result;
+            }
+        }
+
+        switch (columnType) {
+            case CTYPE_STRING:
+                result += validateString(columnName, columnLength, fieldValue);
+                break;
+            default:
+                break;
+        }
+
+        return result;
     }
 
     public static String doValidityCheck(List<Map<String, Object>> metadata, String tableName,
@@ -79,13 +120,8 @@ public class AuxMethods {
             }
 
             Object fieldValue = rowData.getFieldValue(valColumnName);
-            validationResult += validateColumn(valColumnType, valColumnLength, valNullable, fieldValue);
+            validationResult += validateColumn(valColumnName, valColumnType, valColumnLength, valNullable, fieldValue);
 
-            // Her kolonla ilgili değerlendirme bu noktada yapılacak
-            // valColumnName, valColumnType, valColumnLength, valNullable : bu değerleri
-            // kullanarak values içinde gelecek olan satırdan ilgili kolon bulunup
-            // o kolon için validasyon kontrolü yapılacak
-            // Bu ayrı bir fonksiyon olsa iyi olur
         }
 
         return validationResult;
