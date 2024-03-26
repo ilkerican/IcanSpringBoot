@@ -3,6 +3,7 @@ package com.ican.initial.demo.Users;
 import com.github.dozermapper.core.Mapper;
 import com.ican.initial.demo.AppMain.InitService;
 import com.ican.initial.demo.DatabaseLayer.AuxMethods;
+import com.ican.initial.demo.DatabaseLayer.AuxMethods.DatabaseRow;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +80,11 @@ public class UsersController {
 
         List<Map<String, Object>> metaData = initService.getMetaData();
 
-        AuxMethods.doValidityCheck(metaData, "Employee_updated", null);
+        DatabaseRow row = new DatabaseRow();
+        row.setFieldValue("Id", null);
+        row.setFieldValue("StringColumn", "dddddeeeeedddddeeeeedddddeeeeedddddeeeeedddddeeeee1");
+
+        AuxMethods.doValidityCheck(metaData, "Employee_updated", row);
 
         return usersRepository.save(users);
         // return ;

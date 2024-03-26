@@ -19,8 +19,9 @@ public class AuxMethods {
 
     public static final String MSG_NOTNULL = "Field value cannot be null.";
     public static final String MSG_STRINGTOOLONG = "Field value length exceeds expected size.";
+    public static final String NEWLINE = "\r\n";
 
-    public class DatabaseRow {
+    public static class DatabaseRow {
         private Map<String, Object> fields;
 
         public DatabaseRow() {
@@ -56,7 +57,7 @@ public class AuxMethods {
             result = appendColumnNameToErrorMessage(columnName,
                     MSG_STRINGTOOLONG + " : " + fieldLength + " vs " + columnLength);
         }
-        return result;
+        return result + NEWLINE;
     }
 
     private static String validateColumn(String columnName, String columnType, Integer columnLength, boolean nullable,
@@ -67,7 +68,7 @@ public class AuxMethods {
         if (!nullable) {
             if (fieldValue == null) {
                 result += appendColumnNameToErrorMessage(columnName, MSG_NOTNULL);
-                return result;
+                return result + NEWLINE;
             }
         }
 
@@ -124,6 +125,7 @@ public class AuxMethods {
 
         }
 
+        System.out.println(validationResult);
         return validationResult;
 
     }
